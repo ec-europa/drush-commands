@@ -118,6 +118,7 @@ function drush_nexteuropa_export_data_ne_export_data()
             drush_file_append_data($file, implode(array_keys($datas), $CSV_SEPARATOR) . PHP_EOL);
         }
         drush_file_append_data($file, implode($datas, $CSV_SEPARATOR) . PHP_EOL);
+        drush_log("CSV generated " . $file, 'status');
     } else {
         drush_print_r(drush_get_option('format', false));
         switch (drush_get_option('format', false)) {
