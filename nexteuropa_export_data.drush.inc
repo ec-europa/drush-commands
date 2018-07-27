@@ -400,9 +400,10 @@ function nexteuropa_export_data_get_contrib_module_release_info($module, $versio
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
     $modules_info = _xml2array(simplexml_load_string(curl_exec($ch)));
+    $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
-    if (empty($modules_info) || $modules_info == false) {
-        throw new \Exception('Could not connect to drupal.org');
+    if (empty($modules_info) || $httpcode !== 200 ) {
+        throw new \Exception('Could not connect to drupal.org. curl error code: '. $httpcode);
     }
     if ($cache_enabled) {
         drush_cache_set($cacheID, $modules_info);
