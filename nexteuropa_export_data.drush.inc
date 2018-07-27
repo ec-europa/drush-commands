@@ -67,8 +67,6 @@ function drush_nexteuropa_export_data_ne_export_data()
     "Site og:title" => nexteuropa_export_get_metatag("og:title"),
     "Site name" => variable_get('site_name', ''),
     "Site slogan" => '"' . variable_get('site_slogan', '') . '"',
-    "Drupal profile" => variable_get('install_profile', ''),
-    "Nexteuropa version" => nexteuropa_export_data_get_master_version(),
     "Number of published nodes" => db_query("SELECT count(*) FROM {node} WHERE status=1")->fetchField(),
     "Number of unpublished nodes" => db_query("SELECT count(*) FROM {node} WHERE status=1")->fetchField(),
     "Number of files" => db_query("SELECT count(*) FROM {file_managed}")->fetchField(),
@@ -82,12 +80,14 @@ function drush_nexteuropa_export_data_ne_export_data()
         array(":access" => strtotime("-6 months"), ":mail" => "%@%europa.eu")
     )->fetchField(),
     "Drupal version" => VERSION,
+    "Drupal profile" => variable_get('install_profile', ''),
+    "Nexteuropa version" => nexteuropa_export_data_get_master_version(),
     "Current theme" => variable_get('theme_default', ''),
     "Current admin theme" => variable_get('admin_theme', ''),
     "Number of content types" => count(nexteuropa_export_data_get_node_types()),
-    "List of content types" => implode(nexteuropa_export_data_get_node_types(), $VALUES_SEPARATOR),
+    "List of content types" => '"' . implode(nexteuropa_export_data_get_node_types(), $VALUES_SEPARATOR) . '"',
     "Languages Number" => count(nexteuropa_export_data_get_languages()),
-    "Languages" => implode(nexteuropa_export_data_get_languages(), $VALUES_SEPARATOR)
+    "Languages" => '"' . implode(nexteuropa_export_data_get_languages(), $VALUES_SEPARATOR) . '"'
     );
 
     // Add module number and list, by type (feature/contrib/custom).
@@ -120,7 +120,6 @@ function drush_nexteuropa_export_data_ne_export_data()
         drush_file_append_data($file, implode($datas, $CSV_SEPARATOR) . PHP_EOL);
         drush_log("CSV generated " . $file, 'status');
     } else {
-        drush_print_r(drush_get_option('format', false));
         switch (drush_get_option('format', false)) {
         case 'silent':
         case 'none':
@@ -159,8 +158,7 @@ function nexteuropa_export_get_metatag($tag)
 {
     $ogtitle="";
 
-    //$page = file_get_contents ($GLOBALS['base_url']);
-    $page = "";
+    $page = file_get_contents ($GLOBALS['base_url']);
     if(preg_match('/<meta property="'. $tag .'" content="(.*?)" \/>/', $page, $matches)) {
         $ogtitle = $matches[1];
     }
