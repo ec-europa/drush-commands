@@ -12,15 +12,6 @@ That's it!
 ```
 drush system-table-check
 ```
-Gives you a list of entries in the system table for modules that are no longer present in your site. 
-
-**After you reviewed these** , run
-```
-drush system-table-clean
-```
-
-This will clean the system table. 
-Clear caches and check the website.
 
 ## Note:
 D7 only!
