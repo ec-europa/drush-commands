@@ -66,7 +66,7 @@ function drush_nexteuropa_export_data_ne_export_data()
     "URL" => $GLOBALS['base_url'],
     "Site og:title" => nexteuropa_export_get_metatag("og:title"),
     "Site name" => variable_get('site_name', ''),
-    "Site slogan" => variable_get('site_slogan', ''),
+    "Site slogan" => '"' . variable_get('site_slogan', '') . '"',
     "Drupal profile" => variable_get('install_profile', ''),
     "Nexteuropa version" => nexteuropa_export_data_get_master_version(),
     "Number of published nodes" => db_query("SELECT count(*) FROM {node} WHERE status=1")->fetchField(),
@@ -128,7 +128,7 @@ function drush_nexteuropa_export_data_ne_export_data()
         case 'list':
             foreach ($datas as $key => $data) {
                 drush_print($key ." : ". $data );
-                drush_print(PHP_EOL . "---------");
+                drush_print("----------------");
             }
             break;
         case 'CSV':
@@ -401,7 +401,7 @@ function nexteuropa_export_data_get_contrib_module_release_info($module, $versio
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
     $modules_info = _xml2array(simplexml_load_string(curl_exec($ch)));
     curl_close($ch);
-    if (empty($modules_info)) {
+    if (empty($modules_info) || $modules_info == false) {
         throw new \Exception('Could not connect to drupal.org');
     }
     if ($cache_enabled) {
