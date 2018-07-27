@@ -158,7 +158,16 @@ function nexteuropa_export_get_metatag($tag)
 {
     $ogtitle="";
 
-    $page = file_get_contents ($GLOBALS['base_url']);
+    $page = @file_get_contents ($GLOBALS['base_url']);
+    if (empty($page)){
+        drush_log (
+            dt(
+                "Cannot access to !url. Error: !error". $GLOBALS['base_url'],
+                array("!url" => $GLOBALS['base_url'],"!error" => implode($http_response_header,", "))
+            ),
+            "warning"
+        );
+    }
     if(preg_match('/<meta property="'. $tag .'" content="(.*?)" \/>/', $page, $matches)) {
         $ogtitle = $matches[1];
     }
