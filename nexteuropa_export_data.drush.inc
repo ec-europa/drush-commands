@@ -157,8 +157,14 @@ function nexteuropa_export_data_get_master_version()
 function nexteuropa_export_get_metatag($tag)
 {
     $ogtitle="";
-
-    $page = @file_get_contents ($GLOBALS['base_url']);
+    $context = stream_context_create(
+        array(
+            'http' => array(
+                'follow_location' => true
+            )
+        )
+    );
+    $page = @file_get_contents ($GLOBALS['base_url'], false, $context);
     if (empty($page)){
         drush_log (
             dt(
