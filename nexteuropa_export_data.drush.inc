@@ -64,7 +64,7 @@ function drush_nexteuropa_export_data_ne_export_data()
     $datas = array(
     "Site Id" => str_replace('sites/', '', conf_path()),
     "URL" => $GLOBALS['base_url'],
-    "Site og:title" => nexteuropa_export_get_metatag("og:title"),
+    "Site og:title" => '"' . nexteuropa_export_get_metatag("og:title") . '"',
     "Site name" => variable_get('site_name', ''),
     "Site slogan" => '"' . variable_get('site_slogan', '') . '"',
     "Number of published nodes" => db_query("SELECT count(*) FROM {node} WHERE status=1")->fetchField(),
