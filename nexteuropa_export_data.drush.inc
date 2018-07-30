@@ -72,7 +72,7 @@ function drush_nexteuropa_export_data_ne_export_data()
     "Number of files" => db_query("SELECT count(*) FROM {file_managed}")->fetchField(),
     "Number of videos" =>  db_query("SELECT count(*) FROM {file_managed} WHERE type='video'")->fetchField(),
     "Number of active internal users" => db_query(
-        "SELECT count(uid) from {users} WHERE access >= :access AND mail NOT LIKE (:mail)",
+        "SELECT count(uid) from {users} WHERE access >= :access AND mail LIKE (:mail)",
         array(":access" => strtotime("-6 months"), ":mail" => "%@%europa.eu")
     )->fetchField(),
     "Number of active external users"=> db_query(
