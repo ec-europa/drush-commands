@@ -68,7 +68,7 @@ function drush_nexteuropa_export_data_ne_export_data()
     "Site name" => variable_get('site_name', ''),
     "Site slogan" => '"' . variable_get('site_slogan', '') . '"',
     "Number of published nodes" => db_query("SELECT count(*) FROM {node} WHERE status=1")->fetchField(),
-    "Number of unpublished nodes" => db_query("SELECT count(*) FROM {node} WHERE status=1")->fetchField(),
+    "Number of unpublished nodes" => db_query("SELECT count(*) FROM {node} WHERE status=0")->fetchField(),
     "Number of files" => db_query("SELECT count(*) FROM {file_managed}")->fetchField(),
     "Number of videos" =>  db_query("SELECT count(*) FROM {file_managed} WHERE type='video'")->fetchField(),
     "Number of active internal users" => db_query(
@@ -101,7 +101,7 @@ function drush_nexteuropa_export_data_ne_export_data()
 
     // Contrib D8 modules
     $md8 = nexteuropa_export_data_get_modules_contrib_not_in_D8();
-    $datas["Number contrib without a D8 version"] = count($md8);
+    $datas["Contrib without a D8 version"] = count($md8);
     $datas["List contrib without a D8 version"] = implode(array_keys($md8), $VALUES_SEPARATOR);
 
     // Add metrics.
