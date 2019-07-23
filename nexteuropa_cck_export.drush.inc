@@ -58,8 +58,8 @@ function drush_nexteuropa_cck_export_ne_cck_export()
   $datas = array(
     "Site Id" => str_replace('sites/', '', conf_path()),
     "nexteuropa_cookie_consent_kit" => db_query("select status as module_enabled from {system} where name ='nexteuropa_cookie_consent_kit'")->fetchField(),
-    "nexteuropa_cookie_consent_kit_display_cookie_banner" => variable_get('nexteuropa_cookie_consent_kit_display_cookie_banner', ''),
-    "nexteuropa_cookie_consent_kit_display_cookie_video" => variable_get('nexteuropa_cookie_consent_kit_display_cookie_video', ''),
+    "nexteuropa_cookie_consent_kit_display_cookie_banner" => variable_get('nexteuropa_cookie_consent_kit_display_cookie_banner', '0'),
+    "nexteuropa_cookie_consent_kit_display_cookie_video" => variable_get('nexteuropa_cookie_consent_kit_display_cookie_video', '0'),
   );
 
   if ($file) {
