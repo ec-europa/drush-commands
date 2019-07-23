@@ -2,10 +2,10 @@
 
 ## Installation
 
-* Put the nexteuropa_export_data.drush.inc file into your $HOME/.drush/ folder
+* Put the nexteuropa_cck_export.drush.inc file into your $HOME/.drush/ folder
 * Run drush cc drush
 ```
-cp nexteuropa_export_data.drush.inc ~/.drush/
+cp nexteuropa_cck_export.drush.inc ~/.drush/
 drush cc drush
 ```
 That's it!
@@ -13,8 +13,8 @@ That's it!
 ## Usage
 
 ```
-drush ne-export-data
-drush ne-export-data --result-file=./result.csv
+drush ne-cck-export
+drush ne-cck-export --result-file=./result.csv
 ```
 
 ## Note:
