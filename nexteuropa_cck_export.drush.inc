@@ -54,10 +54,12 @@ function drush_nexteuropa_cck_export_ne_cck_export()
 
   global $conf;
   $result = array();
+  global $base_url;
 
   $datas = array(
     "Site Id" => str_replace('sites/', '', conf_path()),
-    "nexteuropa_cookie_consent_kit" => db_query("select status as module_enabled from {system} where name ='nexteuropa_cookie_consent_kit'")->fetchField(),
+    "base_url" => $base_url,
+    "nexteuropa_cookie_consent_kit" => drush_nexteuropa_cck_export_module_status(),
     "nexteuropa_cookie_consent_kit_display_cookie_banner" => variable_get('nexteuropa_cookie_consent_kit_display_cookie_banner', '0'),
     "nexteuropa_cookie_consent_kit_display_cookie_video" => variable_get('nexteuropa_cookie_consent_kit_display_cookie_video', '0'),
   );
@@ -86,4 +88,12 @@ function drush_nexteuropa_cck_export_ne_cck_export()
         break;
     }
   }
+}
+
+function drush_nexteuropa_cck_export_module_status(){
+  $status = db_query("select status as module_enabled from {system} where name ='nexteuropa_cookie_consent_kit'")->fetchField();
+  if (! $status){
+    $status = 0;
+  }
+  return $status;
 }
